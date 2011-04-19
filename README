@@ -11,11 +11,18 @@ In order to use wsdl2php you must fullfill the following requirements:
 
 	o PHP 5 >= 5.0.1 with SOAP and DOM enabled
 	o PEAR installer >= 1.4
+	o Phing
+        $ pear channel-discover pear.phing.info
+        $ pear install phing/phing
 
 Installation
 ------------
 1) Clone the latest release from git://github.com/jbarciauskas/wsdl2php.git
-2) Install the package with the PEAR installer:
+2) Build the package
+
+    $ phing
+
+3) Install the package with the PEAR installer:
 	
 	$ sudo pear install path/to/wsdl2php-x.y.z-pear.tgz
 
