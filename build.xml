@@ -1,0 +1,213 @@
+<?xml version="1.0" ?>
+<!--
+        This build file packages the wsdl2php files, builds a package.xml for installation
+        using PEAR and creates the necessary TGZ files.
+-->
+<project name="wsdl2php" basedir="." default="main">
+
+  <property name="version" value="0.2.1" />
+  <property name="build.base.dir" value="build"/>
+  <property name="pkgname" value="wsdl2php-${version}"/>
+  <property name="build.src.dir" value="${build.base.dir}/${pkgname}"/>
+  <property name="codecoverage" value="false"/>
+  <property name="reports.dir" value="tests/reports"/>
+  <property name="reports.unit.dir" value="${reports.dir}/unit"/>
+  <property name="reports.codecoverage.dir" value="${reports.dir}/coverage"/>
+  <property name="reports.style.dir" value="${reports.dir}/style"/>
+  <property name="reports.geshi.dir" value="${reports.dir}/geshi"/>
+
+  <fileset dir="src" id="scripts">
+    <include name="bin/wsdl2php"/>
+    <include name="bin/wsdl2php.php"/>
+  </fileset>
+
+  <fileset dir="." id="tests">
+    <include name="tests/ColdFusion/*Test.php"/>
+    <include name="tests/DotNet/*Test.php"/>
+  </fileset>
+
+  <fileset dir="." id="misc">
+    <include name="ChangeLog"/>
+    <include name="NEWS"/>
+    <include name="README"/>
+  </fileset>
+
+  <target name="main">
+    <phingcall target="build"/>
+    <phingcall target="pear-package"/>
+    <phingcall target="tar"/>
+  </target>
+
+  <!--
+    build
+
+    Copy the desired files into the build/ dir
+    making sure to put them in the directory
+    structure that will be needed for PEAR install
+  -->
+  <target name="build">
+     <echo>Creating directory layout...</echo>
+     <delete dir="${build.base.dir}"/>
+     <copy todir="${build.src.dir}">
+       <fileset refid="scripts"/>
+       <fileset refid="misc"/>
+     </copy>
+     <chmod file="${build.src.dir}/bin/wsdl2php" mode="755"/>
+   </target>
+
+   <!--
+     pear-package
+       
+     Create a PEAR package.xml which will guide the installation.
+   -->
+   <target name="pear-package">
+     <echo>Creating PEAR package.xml...</echo>
+     <delete file="${tarfile}"/>
+     <pearpkg name="wsdl2php" dir="${build.src.dir}" destFile="${build.base.dir}/package.xml">
+       <fileset refid="scripts"/>
+
+       <option name="notes">wsdl2php is a simple tool for PHP 5 to generate client code against a WSDL-file</option>
+
+       <!-- Set the simple options -->
+       <option name="description">PHP 5 Web Service Proxy Generator</option>
+       <option name="summary">wsdl2php is a tool for generating proxy classes that can be used to access web services</option>
+       <option name="version" value="${version}"/>
+       <option name="state" value="alpha"/>
+       <option name="license" value="LGPL"/>
+
+       <!-- Set the complex options -->
+       <mapping name="maintainers">
+         <element>
+           <element key="handle" value="knut"/>
+           <element key="name" value="Knut Urdalen"/>
+	   <element key="email" value="knut.urdalen@gmail.com"/>
+	   <element key="role" value="lead"/>
+	 </element>
+       </mapping>
+
+       <mapping name="deps">
+         <element>
+           <element key="type" value="php"/>
+           <element key="version" value="5.0.1"/>
+	   <element key="rel" value="ge"/>
+	 </element>
+       </mapping>
+
+       <mapping name="installexceptions">
+         <element key="bin/wsdl2php.php" value="/"/>
+	 <element key="bin/wsdl2php" value="/"/>
+       </mapping>
+
+       <mapping name="installas">
+         <element key="bin/wsdl2php.php" value="wsdl2php.php"/>
+         <element key="bin/wsdl2php" value="wsdl2php"/>
+       </mapping>
+
+       <mapping name="platformexceptions">
+         <element key="bin/wsdl2php.bat" value="windows"/>
+         <element key="bin/wsdl2php" value="(*ix|*ux|darwin*|SunOS*)"/>
+       </mapping>
+
+       <mapping name="replacements">
+         <element key="bin/wsdl2php">
+           <element>
+	     <element key="type" value="pear-config"/>
+             <element key="from" value="@PHP-BIN@"/>
+             <element key="to" value="php_bin"/>
+           </element>
+           <element>
+	     <element key="type" value="pear-config"/>
+             <element key="from" value="@BIN-DIR@"/>
+             <element key="to" value="bin_dir"/>
+           </element>
+           <element>
+             <element key="type" value="pear-config"/>
+             <element key="from" value="@PEAR-DIR@"/>
+             <element key="to" value="php_dir"/>
+           </element>
+         </element>
+       </mapping>
+
+                        <!--<mapping name="dir_roles">
+                                <element key="phing_guide" value="doc"/>
+                                <element key="etc" value="data"/>
+                                <element key="example" value="doc"/>
+                        </mapping>-->
+
+
+       <mapping name="exceptions">
+         <element key="bin/wsdl2php" value="script"/>
+       </mapping>
+
+    </pearpkg>
+  </target>
+
+  <!--
+    tar  
+    
+    Create a tar.gz of the files, which will be installed by pear package manager.
+  -->
+  <target name="tar">
+    <echo>Creating tar.gz package...</echo>
+    <property name="tarfile" value="${build.base.dir}/${pkgname}-pear.tgz"/>
+    <delete file="${tarfile}"/>
+    <tar compression="gzip" destFile="${tarfile}" basedir="${build.base.dir}" />
+  </target>
+
+  <target name="deploy">
+    <echo>Uninstalling wsdl2php</echo>
+    <exec command="sudo pear uninstall wsdl2php" dir="." />
+    <echo>Deploying wsdl2php</echo>
+    <exec command="sudo pear install ${build.base.dir}/${pkgname}-pear.tgz" dir="." />
+  </target>
+
+  <target name="test" description="Run unit tests">
+
+    <if>
+      <equals arg1="${codecoverage}" arg2="true"/>
+      <then>
+        <mkdir dir="${reports.codecoverage.dir}"/>
+        <echo>Preparing Code Coverage Database</echo>
+        <coverage-setup database="${reports.codecoverage.dir}/coverage.db">
+          <fileset refid="src"/>
+        </coverage-setup>
+      </then>
+    </if>
+
+    <echo>Running Unit Tests</echo>
+    <phpunit 
+      codecoverage="${codecoverage}" 
+      printsummary="true" 
+      haltonfailure="false" 
+      haltonerror="false">
+      <formatter 
+        type="xml" 
+	todir="${reports.dir}" 
+	outfile="testresult.xml"/>
+      <batchtest>
+        <fileset refid="tests"/>
+      </batchtest>
+    </phpunit>
+
+
+    <if>
+      <equals arg1="${codecoverage}" arg2="true"/>
+      <then>
+        <echo>Creating Code Coverage Report</echo>
+	<!--<coverage-report 
+	  outfile="${reports.dir}/coverage.xml" 
+	  geshipath="${reports.geshi.dir}" 
+	  geshilanguagespath="${reports.geshi.dir}/geshi">-->
+
+        <coverage-report 
+	  outfile="${reports.dir}/coverage.xml">
+          <report 
+	    todir="${reports.codecoverage.dir}" 
+	    styledir="${reports.style.dir}"/>
+        </coverage-report>
+      </then>
+    </if>
+
+  </target>
+  
+</project>

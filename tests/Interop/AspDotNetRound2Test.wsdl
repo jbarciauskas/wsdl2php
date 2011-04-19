@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s0="http://soapinterop.org/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://soapinterop.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://soapinterop.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://soapinterop.org/xsd">
+      <s:import namespace="http://soapinterop.org/" />
+      <s:complexType name="SOAPStruct">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varString" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varInt" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varFloat" type="s:float" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SOAPStructStruct">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varString" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varInt" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varFloat" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varStruct" type="s0:SOAPStruct" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SOAPArrayStruct">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varString" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varInt" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varFloat" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="varArray" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://soapinterop.org/">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <s:complexType name="ArrayOfString">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="s:string[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="echoStructAsSimpleTypesSoapIn">
+    <wsdl:part name="inputStruct" type="s0:SOAPStruct" />
+  </wsdl:message>
+  <wsdl:message name="echoStructAsSimpleTypesSoapOut">
+    <wsdl:part name="outputString" type="s:string" />
+    <wsdl:part name="outputInteger" type="s:int" />
+    <wsdl:part name="outputFloat" type="s:float" />
+  </wsdl:message>
+  <wsdl:message name="echoSimpleTypesAsStructSoapIn">
+    <wsdl:part name="inputString" type="s:string" />
+    <wsdl:part name="inputInteger" type="s:int" />
+    <wsdl:part name="inputFloat" type="s:float" />
+  </wsdl:message>
+  <wsdl:message name="echoSimpleTypesAsStructSoapOut">
+    <wsdl:part name="return" type="s0:SOAPStruct" />
+  </wsdl:message>
+  <wsdl:message name="echo2DStringArraySoapIn">
+    <wsdl:part name="input2DStringArray" type="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:message name="echo2DStringArraySoapOut">
+    <wsdl:part name="return" type="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:message name="echoNestedStructSoapIn">
+    <wsdl:part name="inputStruct" type="s0:SOAPStructStruct" />
+  </wsdl:message>
+  <wsdl:message name="echoNestedStructSoapOut">
+    <wsdl:part name="return" type="s0:SOAPStructStruct" />
+  </wsdl:message>
+  <wsdl:message name="echoNestedArraySoapIn">
+    <wsdl:part name="inputStruct" type="s0:SOAPArrayStruct" />
+  </wsdl:message>
+  <wsdl:message name="echoNestedArraySoapOut">
+    <wsdl:part name="return" type="s0:SOAPArrayStruct" />
+  </wsdl:message>
+  <wsdl:portType name="SoapTestSoap">
+    <wsdl:operation name="echoStructAsSimpleTypes" parameterOrder="inputStruct outputString outputInteger outputFloat">
+      <wsdl:input message="tns:echoStructAsSimpleTypesSoapIn" />
+      <wsdl:output message="tns:echoStructAsSimpleTypesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="echoSimpleTypesAsStruct">
+      <wsdl:input message="tns:echoSimpleTypesAsStructSoapIn" />
+      <wsdl:output message="tns:echoSimpleTypesAsStructSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="echo2DStringArray">
+      <wsdl:input message="tns:echo2DStringArraySoapIn" />
+      <wsdl:output message="tns:echo2DStringArraySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="echoNestedStruct">
+      <wsdl:input message="tns:echoNestedStructSoapIn" />
+      <wsdl:output message="tns:echoNestedStructSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="echoNestedArray">
+      <wsdl:input message="tns:echoNestedArraySoapIn" />
+      <wsdl:output message="tns:echoNestedArraySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SoapTestSoap" type="tns:SoapTestSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="echoStructAsSimpleTypes">
+      <soap:operation soapAction="http://soapinterop.org/" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="echoSimpleTypesAsStruct">
+      <soap:operation soapAction="http://soapinterop.org/" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="echo2DStringArray">
+      <soap:operation soapAction="http://soapinterop.org/" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="echoNestedStruct">
+      <soap:operation soapAction="http://soapinterop.org/" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="echoNestedArray">
+      <soap:operation soapAction="http://soapinterop.org/" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SoapTestSoap12" type="tns:SoapTestSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="echoStructAsSimpleTypes">
+      <soap12:operation soapAction="http://soapinterop.org/" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="echoSimpleTypesAsStruct">
+      <soap12:operation soapAction="http://soapinterop.org/" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="echo2DStringArray">
+      <soap12:operation soapAction="http://soapinterop.org/" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="echoNestedStruct">
+      <soap12:operation soapAction="http://soapinterop.org/" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="echoNestedArray">
+      <soap12:operation soapAction="http://soapinterop.org/" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SoapTest">
+    <wsdl:port name="SoapTestSoap" binding="tns:SoapTestSoap">
+      <soap:address location="http://www.mssoapinterop.org/asmx/simpleB.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SoapTestSoap12" binding="tns:SoapTestSoap12">
+      <soap12:address location="http://www.mssoapinterop.org/asmx/simpleB.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

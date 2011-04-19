@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Phing Batchtest" tests="2" assertions="0" failures="0" errors="2" time="2.467165">
+    <testsuite name="EmailVerifyTest" file="/home/jbarciauskas/wsdl2php/0.2.1/tests/DotNet/EmailVerifyTest.php" fullPackage="wsdl2php.DotNet" package="wsdl2php.DotNet" tests="1" assertions="0" failures="0" errors="1" time="1.133117">
+      <testcase name="testVerifyEmail" class="EmailVerifyTest" file="/home/jbarciauskas/wsdl2php/0.2.1/tests/DotNet/EmailVerifyTest.php" line="24" assertions="0" time="1.133117">
+        <error type="SoapFault">EmailVerifyTest::testVerifyEmail
+SoapFault: Server was unable to process request. ---&gt; Object reference not set to an instance of an object.
+
+/home/jbarciauskas/wsdl2php/0.2.1/tests/work/EmailVerNoTestEmail.php:164
+/home/jbarciauskas/wsdl2php/0.2.1/tests/DotNet/EmailVerifyTest.php:28
+/home/shared/pear/phing.php:37
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="ComicsWebServiceTest" file="/home/jbarciauskas/wsdl2php/0.2.1/tests/ColdFusion/ComicsWebServiceTest.php" fullPackage="wsdl2php.ColdFusion" package="wsdl2php.ColdFusion" tests="1" assertions="0" failures="0" errors="1" time="1.334048">
+      <testcase name="testGetComics" class="ComicsWebServiceTest" file="/home/jbarciauskas/wsdl2php/0.2.1/tests/ColdFusion/ComicsWebServiceTest.php" line="24" assertions="0" time="1.334048">
+        <error type="SoapFault">ComicsWebServiceTest::testGetComics
+SoapFault: Error Fetching http headers
+
+/home/jbarciauskas/wsdl2php/0.2.1/tests/work/HouseofDev.php:40
+/home/jbarciauskas/wsdl2php/0.2.1/tests/ColdFusion/ComicsWebServiceTest.php:26
+/home/shared/pear/phing.php:37
+</error>
+      </testcase>
+    </testsuite>
+  </testsuite>
+</testsuites>

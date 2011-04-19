@@ -1,0 +1,354 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<definitions  name ='Interop'   targetNamespace = 'http://tempuri.org/wsdl/'
+	 xmlns:wsdlns='http://tempuri.org/wsdl/' 
+	 xmlns:typens='http://soapinterop.org/xsd' 
+	 xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' 
+	 xmlns:xsd='http://www.w3.org/2001/XMLSchema' 
+	 xmlns:stk='http://schemas.microsoft.com/soap-toolkit/wsdl-extension'
+	 xmlns='http://schemas.xmlsoap.org/wsdl/'> 
+  <types>
+    <schema targetNamespace='http://soapinterop.org/xsd'
+      xmlns='http://www.w3.org/2001/XMLSchema'
+      xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+      xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+      elementFormDefault='qualified'>
+      <complexType name="SOAPStruct">
+        <all>
+          <element name="varString" type="string" />
+          <element name="varInt" type="int" /> 
+          <element name="varFloat" type="float" />
+        </all>
+      </complexType>
+      <complexType  name ='ArrayOfSOAPStruct'>
+        <complexContent>
+          <restriction base='SOAP-ENC:Array'>
+            <attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='typens:SOAPStruct[]'/>
+          </restriction>
+        </complexContent>
+      </complexType>
+      <complexType  name ='ArrayOffloat'>
+        <complexContent>
+          <restriction base='SOAP-ENC:Array'>
+            <attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='float[]'/>
+          </restriction>
+        </complexContent>
+      </complexType>
+      <complexType  name ='ArrayOfint'>
+        <complexContent>
+          <restriction base='SOAP-ENC:Array'>
+            <attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='int[]'/>
+          </restriction>
+        </complexContent>
+      </complexType>
+      <complexType  name ='ArrayOfstring'>
+        <complexContent>
+          <restriction base='SOAP-ENC:Array'>
+            <attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='string[]'/>
+          </restriction>
+        </complexContent>
+      </complexType>
+    </schema>
+  </types>
+<message name='Server.echoDecimal'>
+    <part name='inputDecimal' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoDecimalResponse'>
+    <part name='return' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoBoolean'>
+    <part name='inputBoolean' type='xsd:boolean'/>
+  </message>
+  <message name='Server.echoBooleanResponse'>
+    <part name='return' type='xsd:anyType'/>
+  </message>
+
+  <message name='Server.echoBase64'>
+    <part name='inputBase64' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoBase64Response'>
+    <part name='Result' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoDate'>
+    <part name='inputDate' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoDateResponse'>
+    <part name='Result' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoVoid'>
+  </message>
+  <message name='Server.echoVoidResponse'>
+  </message>
+  <message name='Server.NoSuchMethod'>
+  </message>
+  <message name='Server.NoSuchMethodResponse'>
+  </message>
+  <message name='Server.echoStructArray'>
+    <part name='inputStructArray' type='typens:ArrayOfSOAPStruct'/>
+  </message>
+  <message name='Server.echoStructArrayResponse'>
+    <part name='Result' type='typens:ArrayOfSOAPStruct'/>
+  </message>
+  <message name='Server.echoStruct'>
+    <part name='inputStruct' type='typens:SOAPStruct'/>
+  </message>
+  <message name='Server.echoStructResponse'>
+    <part name='Result' type='typens:SOAPStruct'/>
+  </message>
+  <message name='Server.echoFloatArray'>
+    <part name='inputFloatArray' type='typens:ArrayOffloat'/>
+  </message>
+  <message name='Server.echoFloatArrayResponse'>
+    <part name='Result' type='typens:ArrayOffloat'/>
+  </message>
+  <message name='Server.echoFloat'>
+    <part name='inputFloat' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoFloatResponse'>
+    <part name='Result' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoIntegerArray'>
+    <part name='inputIntegerArray' type='typens:ArrayOfint'/>
+  </message>
+  <message name='Server.echoIntegerArrayResponse'>
+    <part name='Result' type='typens:ArrayOfint'/>
+  </message>
+  <message name='Server.echoInteger'>
+    <part name='inputInteger' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoIntegerResponse'>
+    <part name='Result' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoStringArray'>
+    <part name='inputStringArray' type='typens:ArrayOfstring'/>
+  </message>
+  <message name='Server.echoStringArrayResponse'>
+    <part name='Result' type='typens:ArrayOfstring'/>
+  </message>
+  <message name='Server.echoString'>
+    <part name='inputString' type='xsd:anyType'/>
+  </message>
+  <message name='Server.echoStringResponse'>
+    <part name='Result' type='xsd:anyType'/>
+  </message>
+  <portType name='SoapPort'>
+    <operation name='echoBase64' parameterOrder='inputBase64'>
+      <input message='wsdlns:Server.echoBase64' />
+      <output message='wsdlns:Server.echoBase64Response' />
+    </operation>
+    <operation name='echoDate' parameterOrder='inputDate'>
+      <input message='wsdlns:Server.echoDate' />
+      <output message='wsdlns:Server.echoDateResponse' />
+    </operation>
+    <operation name='echoVoid' >
+      <input message='wsdlns:Server.echoVoid' />
+      <output message='wsdlns:Server.echoVoidResponse' />
+    </operation>
+    <operation name='NoSuchMethod' >
+      <input message='wsdlns:Server.NoSuchMethod' />
+      <output message='wsdlns:Server.NoSuchMethod' />
+    </operation>
+    <operation name='echoStructArray' parameterOrder='inputStructArray'>
+      <input message='wsdlns:Server.echoStructArray' />
+      <output message='wsdlns:Server.echoStructArrayResponse' />
+    </operation>
+    <operation name='echoStruct' parameterOrder='inputStruct'>
+      <input message='wsdlns:Server.echoStruct' />
+      <output message='wsdlns:Server.echoStructResponse' />
+    </operation>
+    <operation name='echoFloatArray' parameterOrder='inputFloatArray'>
+      <input message='wsdlns:Server.echoFloatArray' />
+      <output message='wsdlns:Server.echoFloatArrayResponse' />
+    </operation>
+    <operation name='echoFloat' parameterOrder='inputFloat'>
+      <input message='wsdlns:Server.echoFloat' />
+      <output message='wsdlns:Server.echoFloatResponse' />
+    </operation>
+    <operation name='echoIntegerArray' parameterOrder='inputIntegerArray'>
+      <input message='wsdlns:Server.echoIntegerArray' />
+      <output message='wsdlns:Server.echoIntegerArrayResponse' />
+    </operation>
+    <operation name='echoInteger' parameterOrder='inputInteger'>
+      <input message='wsdlns:Server.echoInteger' />
+      <output message='wsdlns:Server.echoIntegerResponse' />
+    </operation>
+    <operation name='echoStringArray' parameterOrder='inputStringArray'>
+      <input message='wsdlns:Server.echoStringArray' />
+      <output message='wsdlns:Server.echoStringArrayResponse' />
+    </operation>
+    <operation name='echoString' parameterOrder='inputString'>
+      <input message='wsdlns:Server.echoString' />
+      <output message='wsdlns:Server.echoStringResponse' />
+    </operation>
+    <operation name='echoDecimal' parameterOrder='inputDecimal'>
+      <input message='wsdlns:Server.echoDecimal' />
+      <output message='wsdlns:Server.echoDecimalResponse' />
+    </operation>
+   <operation name='echoBoolean' parameterOrder='inputBoolean'>
+      <input message='wsdlns:Server.echoBoolean' />
+      <output message='wsdlns:Server.echoBooleanResponse' />
+    </operation>
+  </portType>
+  <binding name='SoapBinding' type='wsdlns:SoapPort' >
+    <stk:binding preferredEncoding='UTF-8'/>
+    <soap:binding style='rpc' transport='http://schemas.xmlsoap.org/soap/http' />
+    <operation name='echoBase64' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoDate' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoVoid' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='NoSuchMethod' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoStructArray' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoStruct' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoFloatArray' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoFloat' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoIntegerArray' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoInteger' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoStringArray' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoString' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoDecimal' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+    <operation name='echoBoolean' >
+      <soap:operation soapAction='urn:soapinterop' />
+      <input>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </input>
+      <output>
+        <soap:body use='encoded' namespace='http://soapinterop.org/'
+		  encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+      </output>
+    </operation>
+  </binding>
+  <service name='Interop' >
+    <port name='SoapPort' binding='wsdlns:SoapBinding' >
+      <soap:address location='http://mssoapinterop.org/stk/InteropTyped.wsdl' />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,120 @@
+
+	ChangeLog wsdl2php
+
+	-- 0.2.1 --
+	
+2006-12-21 Knut Urdalen <knut.urdalen@gmail.com>
+	
+	* src/bin/wsdl2php.php:
+	- Resolved [ 1549651 ] support enums
+	- Resolved [ 1282573 ] Change from SoapClient->__call() to SoapClient->__soapCall()
+	- Resolved [ 1282565 ] Map classes using classmap option
+	
+	* build.xml:
+	- added build file
+	
+	-- 0.2 --
+	
+2005-09-04 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* bin/wsdl2php.php:
+	- added 'UNKNOWN' and 'base64Binary' to "primitive_types"
+	
+2005-09-03 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* build.xml:
+	- added test target with phpunit2report task
+
+	* test/acceptance/unit/**/*Test.php:
+	- added a lot of unit tests
+
+	* test/acceptance/acceptance.php:
+	- corrected implementationID
+
+	* bin/wsdl2php.php:
+	- added 'short' to primitive types
+	- added replacement of whitespace or . in class name
+	- changed to using __call() directly in generated code
+	- changed to extend SoapClient instead of having WebService objects 
+	  contain a single SoapClient instance
+	- added 'double' to primitive types
+	
+2005-08-08 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* bin/wsdl2php.php:
+	- gone through logs from acceptance test and added some more testing on input
+
+	* test/hello/hello2:
+	- added another test script to test the SoapParam with __call() directly
+	  need to use this functionality to improve wsdl2php for the next version
+	  to resolve the naming conflict issues that is the main problem now
+	
+2005-08-07 Knut Urdalen <knut.urdalen@gmail.com>
+	
+	* test/acceptance/acceptance.php:
+	- added usage of XML files with test data as input
+	- added additional checks
+	- added seperate working directory and log files per test XML file
+
+	* test/acceptance/webservicex.php:
+	* test/acceptance/xmethods.php:
+	- added scripts to fetch web service information and store these to XML
+	
+2005-08-06 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* test/acceptance/acceptance.php:
+	* test/acceptance/acceptance.xml:
+	- first version of an acceptance test script
+	
+	-- 0.1 --
+	
+2005-08-05 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* bin/wsdl2php.php:
+	- added license information
+
+	* build.xml:
+	- added phing build file for building pear distribution package
+	
+	* bin/wsdl2php:
+	- added shell script wrapper for wsdl2php
+	
+2005-05-02 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* wsdl2php.php:
+	- rearranged constructor
+	
+2005-03-19 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* wsdl2php.php:
+	- added parse_doc function to help parse wsdl:documentation on service class and functions
+	- added dateTime to primitive types (in deep need of some kind of date class, maybe use PEAR::Date)
+	- removed warning from wsdl2php when no complexTypes exists in WSDL-file
+	
+2005-03-14 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* wsdl2.php:
+	- changed from using just one output file to write one output file for the communication class and one file for
+	  each complexType
+	- added WSDL override in service construct to be able to switch endpoint
+	
+2005-02-22 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* wsdl2.php:
+	- refactored the script to first gather data, then to the code generation
+	
+2005-02-19 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* wsdl2.php:
+	- removed generation of complex types starting with 'ArrayOf' (mostly a convention in WSDL generating tools as MS.NET and Axis)
+	- changed from using SimpleXML to DOMDocument to extract information from the WSDL file
+	  this also solved MS.NET WebServices which uses the 'wsdl' namespace. SimpleXML is no good with namespaces
+	- added __autoload() in the WebService class to automaticly load the complex types
+	
+2005-02-18 Knut Urdalen <knut.urdalen@gmail.com>
+
+	* wsdl2.php:
+	- initial version
+	- code generation of complex types
+	- generation of a self-contained WebService class
+	- changed from using the name of the webservice file to extract the webservice name from the WSDL file itself

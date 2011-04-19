@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" xmlns:intf="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.2.1
+Built on Jun 14, 2005 (09:15:57 EDT)-->
+
+   <wsdl:message name="CelsiusTOFahrenheitRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="KelvinTOReaumurResponse">
+
+      <wsdl:part name="KelvinTOReaumurReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="RankineTOKelvinRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="FahrenheitTOKelvinResponse">
+
+      <wsdl:part name="FahrenheitTOKelvinReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="KelvinTORankineRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="RankineTOFahrenheitRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="RankineTOCelsiusResponse">
+
+      <wsdl:part name="RankineTOCelsiusReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CelsiusTORankineResponse">
+
+      <wsdl:part name="CelsiusTORankineReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="KelvinTORankineResponse">
+
+      <wsdl:part name="KelvinTORankineReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ReaumurTOKelvinResponse">
+
+      <wsdl:part name="ReaumurTOKelvinReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CelsiusTOKelvinRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CelsiusTOFahrenheitResponse">
+
+      <wsdl:part name="CelsiusTOFahrenheitReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ReaumurTOCelsiusRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="FahrenheitTOReaumurRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="KelvinTOCelsiusRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ReaumurTOFahrenheitRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="KelvinTOReaumurRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="RankineTOReaumurRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CelsiusTOReaumurRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="RankineTOKelvinResponse">
+
+      <wsdl:part name="RankineTOKelvinReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CelsiusTOReaumurResponse">
+
+      <wsdl:part name="CelsiusTOReaumurReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ReaumurTOFahrenheitResponse">
+
+      <wsdl:part name="ReaumurTOFahrenheitReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="KelvinTOFahrenheitRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="FahrenheitTOKelvinRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="RankineTOFahrenheitResponse">
+
+      <wsdl:part name="RankineTOFahrenheitReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="RankineTOCelsiusRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="KelvinTOFahrenheitResponse">
+
+      <wsdl:part name="KelvinTOFahrenheitReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ReaumurTOCelsiusResponse">
+
+      <wsdl:part name="ReaumurTOCelsiusReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="FahrenheitTOCelsiusRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="FahrenheitTORankineResponse">
+
+      <wsdl:part name="FahrenheitTORankineReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="FahrenheitTOCelsiusResponse">
+
+      <wsdl:part name="FahrenheitTOCelsiusReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ReaumurTORankineRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CelsiusTORankineRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="FahrenheitTOReaumurResponse">
+
+      <wsdl:part name="FahrenheitTOReaumurReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="FahrenheitTORankineRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CelsiusTOKelvinResponse">
+
+      <wsdl:part name="CelsiusTOKelvinReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="KelvinTOCelsiusResponse">
+
+      <wsdl:part name="KelvinTOCelsiusReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="RankineTOReaumurResponse">
+
+      <wsdl:part name="RankineTOReaumurReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ReaumurTORankineResponse">
+
+      <wsdl:part name="ReaumurTORankineReturn" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ReaumurTOKelvinRequest">
+
+      <wsdl:part name="temp" type="xsd:float"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="TemperatureConvert">
+
+      <wsdl:operation name="CelsiusTOFahrenheit" parameterOrder="temp">
+
+         <wsdl:input message="impl:CelsiusTOFahrenheitRequest" name="CelsiusTOFahrenheitRequest"/>
+
+         <wsdl:output message="impl:CelsiusTOFahrenheitResponse" name="CelsiusTOFahrenheitResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="CelsiusTOKelvin" parameterOrder="temp">
+
+         <wsdl:input message="impl:CelsiusTOKelvinRequest" name="CelsiusTOKelvinRequest"/>
+
+         <wsdl:output message="impl:CelsiusTOKelvinResponse" name="CelsiusTOKelvinResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="CelsiusTOReaumur" parameterOrder="temp">
+
+         <wsdl:input message="impl:CelsiusTOReaumurRequest" name="CelsiusTOReaumurRequest"/>
+
+         <wsdl:output message="impl:CelsiusTOReaumurResponse" name="CelsiusTOReaumurResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="CelsiusTORankine" parameterOrder="temp">
+
+         <wsdl:input message="impl:CelsiusTORankineRequest" name="CelsiusTORankineRequest"/>
+
+         <wsdl:output message="impl:CelsiusTORankineResponse" name="CelsiusTORankineResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="FahrenheitTOCelsius" parameterOrder="temp">
+
+         <wsdl:input message="impl:FahrenheitTOCelsiusRequest" name="FahrenheitTOCelsiusRequest"/>
+
+         <wsdl:output message="impl:FahrenheitTOCelsiusResponse" name="FahrenheitTOCelsiusResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="FahrenheitTOKelvin" parameterOrder="temp">
+
+         <wsdl:input message="impl:FahrenheitTOKelvinRequest" name="FahrenheitTOKelvinRequest"/>
+
+         <wsdl:output message="impl:FahrenheitTOKelvinResponse" name="FahrenheitTOKelvinResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="FahrenheitTOReaumur" parameterOrder="temp">
+
+         <wsdl:input message="impl:FahrenheitTOReaumurRequest" name="FahrenheitTOReaumurRequest"/>
+
+         <wsdl:output message="impl:FahrenheitTOReaumurResponse" name="FahrenheitTOReaumurResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="FahrenheitTORankine" parameterOrder="temp">
+
+         <wsdl:input message="impl:FahrenheitTORankineRequest" name="FahrenheitTORankineRequest"/>
+
+         <wsdl:output message="impl:FahrenheitTORankineResponse" name="FahrenheitTORankineResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="KelvinTOCelsius" parameterOrder="temp">
+
+         <wsdl:input message="impl:KelvinTOCelsiusRequest" name="KelvinTOCelsiusRequest"/>
+
+         <wsdl:output message="impl:KelvinTOCelsiusResponse" name="KelvinTOCelsiusResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="KelvinTOFahrenheit" parameterOrder="temp">
+
+         <wsdl:input message="impl:KelvinTOFahrenheitRequest" name="KelvinTOFahrenheitRequest"/>
+
+         <wsdl:output message="impl:KelvinTOFahrenheitResponse" name="KelvinTOFahrenheitResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="KelvinTOReaumur" parameterOrder="temp">
+
+         <wsdl:input message="impl:KelvinTOReaumurRequest" name="KelvinTOReaumurRequest"/>
+
+         <wsdl:output message="impl:KelvinTOReaumurResponse" name="KelvinTOReaumurResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="KelvinTORankine" parameterOrder="temp">
+
+         <wsdl:input message="impl:KelvinTORankineRequest" name="KelvinTORankineRequest"/>
+
+         <wsdl:output message="impl:KelvinTORankineResponse" name="KelvinTORankineResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ReaumurTOCelsius" parameterOrder="temp">
+
+         <wsdl:input message="impl:ReaumurTOCelsiusRequest" name="ReaumurTOCelsiusRequest"/>
+
+         <wsdl:output message="impl:ReaumurTOCelsiusResponse" name="ReaumurTOCelsiusResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ReaumurTOFahrenheit" parameterOrder="temp">
+
+         <wsdl:input message="impl:ReaumurTOFahrenheitRequest" name="ReaumurTOFahrenheitRequest"/>
+
+         <wsdl:output message="impl:ReaumurTOFahrenheitResponse" name="ReaumurTOFahrenheitResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ReaumurTOKelvin" parameterOrder="temp">
+
+         <wsdl:input message="impl:ReaumurTOKelvinRequest" name="ReaumurTOKelvinRequest"/>
+
+         <wsdl:output message="impl:ReaumurTOKelvinResponse" name="ReaumurTOKelvinResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ReaumurTORankine" parameterOrder="temp">
+
+         <wsdl:input message="impl:ReaumurTORankineRequest" name="ReaumurTORankineRequest"/>
+
+         <wsdl:output message="impl:ReaumurTORankineResponse" name="ReaumurTORankineResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="RankineTOCelsius" parameterOrder="temp">
+
+         <wsdl:input message="impl:RankineTOCelsiusRequest" name="RankineTOCelsiusRequest"/>
+
+         <wsdl:output message="impl:RankineTOCelsiusResponse" name="RankineTOCelsiusResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="RankineTOFahrenheit" parameterOrder="temp">
+
+         <wsdl:input message="impl:RankineTOFahrenheitRequest" name="RankineTOFahrenheitRequest"/>
+
+         <wsdl:output message="impl:RankineTOFahrenheitResponse" name="RankineTOFahrenheitResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="RankineTOKelvin" parameterOrder="temp">
+
+         <wsdl:input message="impl:RankineTOKelvinRequest" name="RankineTOKelvinRequest"/>
+
+         <wsdl:output message="impl:RankineTOKelvinResponse" name="RankineTOKelvinResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="RankineTOReaumur" parameterOrder="temp">
+
+         <wsdl:input message="impl:RankineTOReaumurRequest" name="RankineTOReaumurRequest"/>
+
+         <wsdl:output message="impl:RankineTOReaumurResponse" name="RankineTOReaumurResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="TemperatureConvertSoapBinding" type="impl:TemperatureConvert">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="CelsiusTOFahrenheit">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="CelsiusTOFahrenheitRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="CelsiusTOFahrenheitResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="CelsiusTOKelvin">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="CelsiusTOKelvinRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="CelsiusTOKelvinResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="CelsiusTOReaumur">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="CelsiusTOReaumurRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="CelsiusTOReaumurResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="CelsiusTORankine">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="CelsiusTORankineRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="CelsiusTORankineResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="FahrenheitTOCelsius">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="FahrenheitTOCelsiusRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="FahrenheitTOCelsiusResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="FahrenheitTOKelvin">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="FahrenheitTOKelvinRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="FahrenheitTOKelvinResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="FahrenheitTOReaumur">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="FahrenheitTOReaumurRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="FahrenheitTOReaumurResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="FahrenheitTORankine">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="FahrenheitTORankineRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="FahrenheitTORankineResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="KelvinTOCelsius">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="KelvinTOCelsiusRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="KelvinTOCelsiusResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="KelvinTOFahrenheit">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="KelvinTOFahrenheitRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="KelvinTOFahrenheitResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="KelvinTOReaumur">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="KelvinTOReaumurRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="KelvinTOReaumurResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="KelvinTORankine">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="KelvinTORankineRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="KelvinTORankineResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ReaumurTOCelsius">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="ReaumurTOCelsiusRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="ReaumurTOCelsiusResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ReaumurTOFahrenheit">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="ReaumurTOFahrenheitRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="ReaumurTOFahrenheitResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ReaumurTOKelvin">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="ReaumurTOKelvinRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="ReaumurTOKelvinResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ReaumurTORankine">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="ReaumurTORankineRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="ReaumurTORankineResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="RankineTOCelsius">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="RankineTOCelsiusRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="RankineTOCelsiusResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="RankineTOFahrenheit">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="RankineTOFahrenheitRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="RankineTOFahrenheitResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="RankineTOKelvin">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="RankineTOKelvinRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="RankineTOKelvinResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="RankineTOReaumur">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="RankineTOReaumurRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="RankineTOReaumurResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="TemperatureConvertService">
+
+      <wsdl:port binding="impl:TemperatureConvertSoapBinding" name="TemperatureConvert">
+
+         <wsdlsoap:address location="http://java.hpcc.nectec.or.th:1978/axis/TemperatureConvert.jws"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

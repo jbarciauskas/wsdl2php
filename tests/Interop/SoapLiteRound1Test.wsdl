@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<definitions name="interopLab" targetNamespace="http://soapinterop.org/interop.wsdl" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/1999/XMLSchema" xmlns:xsi="http://www.w3.org/1999/XMLSchema-instance" xmlns:tns="http://soapinterop.org/xsd" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+	<types>
+		<schema xmlns="http://www.w3.org/1999/XMLSchema" targetNamespace="http://soapinterop.org/xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+			<complexType name="ArrayOfstring">
+				<complexContent>
+					<restriction base="SOAP-ENC:Array">
+						<sequence>
+							<element name="item" type="string" maxOccurs="unbounded"/>
+						</sequence>
+						<attribute name="SOAP-ENC:arrayType" wsdl:arrayType="string[]"/>
+					</restriction>
+				</complexContent>
+			</complexType>
+			<complexType name="ArrayOfint">
+				<complexContent>
+					<restriction base="SOAP-ENC:Array">
+						<sequence>
+							<element name="item" type="int" maxOccurs="unbounded"/>
+						</sequence>
+						<attribute name="SOAP-ENC:arrayType" wsdl:arrayType="int[]"/>
+					</restriction>
+				</complexContent>
+			</complexType>
+			<complexType name="ArrayOffloat">
+				<complexContent>
+					<restriction base="SOAP-ENC:Array">
+						<sequence>
+							<element name="item" type="float" maxOccurs="unbounded"/>
+						</sequence>
+						<attribute name="SOAP-ENC:arrayType" wsdl:arrayType="float[]"/>
+					</restriction>
+				</complexContent>
+			</complexType>
+			<complexType name="ArrayOfSOAPStruct">
+				<complexContent>
+					<restriction base="SOAP-ENC:Array">
+						<sequence>
+							<element name="item" type="tns:SOAPStruct" maxOccurs="unbounded"/>
+						</sequence>
+						<attribute name="SOAP-ENC:arrayType" wsdl:arrayType="tns:SOAPStruct[]"/>
+					</restriction>
+				</complexContent>
+			</complexType>
+			<complexType name="SOAPStruct">
+				<complexContent>
+					<all>
+						<element name="varString" type="xsd:string"/>
+						<element name="varInt" type="xsd:int"/>
+						<element name="varFloat" type="xsd:float"/>
+					</all>
+				</complexContent>
+			</complexType>
+		</schema>
+	</types>
+	<service name="interopLab">
+		<port name="interopTestPort" binding="tns:interopTestBinding">
+			<soap:address location="http://services.soaplite.com/interop.cgi"/>
+		</port>
+	</service>
+	<binding name="interopTestBinding" type="tns:interopTestPortType">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="echoString">
+			<soap:operation soapAction="urn:soapinterop"/>
+			<input>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="echoStringArray">
+			<soap:operation soapAction="urn:soapinterop"/>
+			<input>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="echoInteger">
+			<soap:operation soapAction="urn:soapinterop"/>
+			<input>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="echoIntegerArray">
+			<soap:operation soapAction="urn:soapinterop"/>
+			<input>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="echoFloat">
+			<soap:operation soapAction="urn:soapinterop"/>
+			<input>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="echoFloatArray">
+			<soap:operation soapAction="urn:soapinterop"/>
+			<input>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="echoStruct">
+			<soap:operation soapAction="urn:soapinterop"/>
+			<input>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="echoStructArray">
+			<soap:operation soapAction="urn:soapinterop"/>
+			<input>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="echoVoid">
+			<soap:operation soapAction="urn:soapinterop"/>
+			<input>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://soapinterop.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+	</binding>
+	<message name="echoStringRequest">
+		<part name="inputString" type="xsd:string"/>
+	</message>
+	<message name="echoStringResponse">
+		<part name="return" type="xsd:string"/>
+	</message>
+	<portType name="interopTestPortType">
+		<operation name="echoString" parameterOrder="inputString">
+			<input message="tns:echoStringRequest" name="echoString"/>
+			<output message="tns:echoStringResponse" name="echoStringResponse"/>
+		</operation>
+		<operation name="echoStringArray" parameterOrder="inputStringArray">
+			<input message="tns:echoStringArrayRequest" name="echoStringArray"/>
+			<output message="tns:echoStringArrayResponse" name="echoStringArrayResponse"/>
+		</operation>
+		<operation name="echoInteger" parameterOrder="inputInteger">
+			<input message="tns:echoIntegerRequest" name="echoInteger"/>
+			<output message="tns:echoIntegerResponse" name="echoIntegerResponse"/>
+		</operation>
+		<operation name="echoIntegerArray" parameterOrder="inputIntegerArray">
+			<input message="tns:echoIntegerArrayRequest" name="echoIntegerArray"/>
+			<output message="tns:echoIntegerArrayResponse" name="echoIntegerArrayResponse"/>
+		</operation>
+		<operation name="echoFloat" parameterOrder="inputFloat">
+			<input message="tns:echoFloatRequest" name="echoFloat"/>
+			<output message="tns:echoFloatResponse" name="echoFloatResponse"/>
+		</operation>
+		<operation name="echoFloatArray" parameterOrder="inputFloatArray">
+			<input message="tns:echoFloatArrayRequest" name="echoFloatArray"/>
+			<output message="tns:echoFloatArrayResponse" name="echoFloatArrayResponse"/>
+		</operation>
+		<operation name="echoStruct" parameterOrder="inputStruct">
+			<input message="tns:echoStructRequest" name="echoStruct"/>
+			<output message="tns:echoStructResponse" name="echoStructResponse"/>
+		</operation>
+		<operation name="echoStructArray" parameterOrder="inputStructArray">
+			<input message="tns:echoStructArrayRequest" name="echoStructArray"/>
+			<output message="tns:echoStructArrayResponse" name="echoStructArrayResponse"/>
+		</operation>
+		<operation name="echoVoid">
+			<input message="tns:echoVoidRequest" name="echoVoid"/>
+			<output message="tns:echoVoidResponse" name="echoVoidResponse"/>
+		</operation>
+	</portType>
+	<message name="echoStringArrayRequest">
+		<part name="inputStringArray" type="tns:ArrayOfstring"/>
+	</message>
+	<message name="echoStringArrayResponse">
+		<part name="return" type="tns:ArrayOfstring"/>
+	</message>
+	<message name="echoIntegerRequest">
+		<part name="inputInteger" type="xsd:int"/>
+	</message>
+	<message name="echoIntegerResponse">
+		<part name="return" type="xsd:int"/>
+	</message>
+	<message name="echoIntegerArrayRequest">
+		<part name="inputIntegerArray" type="tns:ArrayOfint"/>
+	</message>
+	<message name="echoIntegerArrayResponse">
+		<part name="return" type="tns:ArrayOfint"/>
+	</message>
+	<message name="echoFloatRequest">
+		<part name="inputFloat" type="xsd:float"/>
+	</message>
+	<message name="echoFloatResponse">
+		<part name="return" type="xsd:float"/>
+	</message>
+	<message name="echoFloatArrayRequest">
+		<part name="inputFloatArray" type="tns:ArrayOffloat"/>
+	</message>
+	<message name="echoFloatArrayResponse">
+		<part name="return" type="tns:ArrayOffloat"/>
+	</message>
+	<message name="echoStructRequest">
+		<part name="inputStruct" type="tns:SOAPStruct"/>
+	</message>
+	<message name="echoStructResponse">
+		<part name="return" type="tns:SOAPStruct"/>
+	</message>
+	<message name="echoStructArrayRequest">
+		<part name="inputStructArray" type="tns:ArrayOfSOAPStruct"/>
+	</message>
+	<message name="echoStructArrayResponse">
+		<part name="return" type="tns:ArrayOfSOAPStruct"/>
+	</message>
+	<message name="echoVoidRequest"/>
+	<message name="echoVoidResponse"/>
+</definitions>
