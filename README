@@ -14,17 +14,15 @@ In order to use wsdl2php you must fullfill the following requirements:
 
 Installation
 ------------
-1) Download the latest release from http://www.sf.net/projects/wsdl2php.
+1) Clone the latest release from git://github.com/jbarciauskas/wsdl2php.git
 2) Install the package with the PEAR installer:
 	
 	$ sudo pear install path/to/wsdl2php-x.y.z-pear.tgz
-
-Subversion Instructions
------------------------
-
-	svn co https://wsdl2php.svn.sourceforge.net/svnroot/wsdl2php wsdl2php
 
 Credits
 -------
 Knut Urdalen - author
 John Lindal - contributor
+
+Originally cloned from http://www.urdalen.no/wsdl2php/
+Customized by Joel Barciauskas
