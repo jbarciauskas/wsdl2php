@@ -242,7 +242,7 @@ foreach($service['types'] as $type) {
         $dirname = str_replace('_', '/', $namespace);
         if(!is_dir($dirname))
             mkdir($dirname, 0777, true);
-        $file = fopen($dirname . $type['class']. '.php', 'w');
+        $file = fopen($dirname . $type['baseClass']. '.php', 'w');
     }
     //  $code .= "/**\n";
     //  $code .= " * ".(isset($type['doc'])?$type['doc']:'')."\n";
@@ -260,15 +260,18 @@ foreach($service['types'] as $type) {
     // add member variables
     foreach($type['members'] as $member) {
         $code .= "    /**\n";
-        $code .= "     * @var " . $namespace . $member['type'] . "\n";
+        if(!in_array($member['type'], $primitive_types))
+            $code .= "     * @var " . $namespace . $member['type'] . "\n";
+        else
+            $code .= "     * @var " . $member['type'] . "\n";
         $code .= "     */\n";
         $code .= "    public \$".$member['member'] . ";\n";
     }
     $code .= "}\n";
     if($file) 
     {
-        print "Writing " . $type['class']. ".php...";
-        fwrite($file, "<?php\n".$code."?>\n");
+        print "Writing " . $type['baseClass']. ".php...";
+        fwrite($file, "<?php\n\n".$code."\n");
         fclose($file);
         $code = "";
         print "ok\n";
@@ -316,7 +319,7 @@ foreach($service['types'] as $type) {
     $code .= "                                    '".$type['baseClass']."' => '".$type['class']."',\n";
 }
 $code .= "                                   );\n\n";
-$code .= "  public function ".$service['class']."(\$wsdl = \"".$service['wsdl']."\", \$options = array()) {\n";
+$code .= "  public function __construct(\$wsdl = \"".$service['wsdl']."\", \$options = array()) {\n";
 
 // initialize classmap (merge)
 $code .= "    foreach(self::\$classmap as \$key => \$value) {\n";
