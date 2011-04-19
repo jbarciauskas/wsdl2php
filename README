@@ -19,6 +19,11 @@ Installation
 	
 	$ sudo pear install path/to/wsdl2php-x.y.z-pear.tgz
 
+Usage
+-----
+
+    $ wsdl2php http://someservice.com/api/Soap.wsdl Soap_Data_Namespace_
+
 Credits
 -------
 Knut Urdalen - author
