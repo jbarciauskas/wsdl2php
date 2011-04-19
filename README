@@ -23,8 +23,8 @@ Installation
     $ phing
 
 3) Install the package with the PEAR installer:
-	
-	$ sudo pear install path/to/wsdl2php-x.y.z-pear.tgz
+
+    $ sudo pear install build/wsdl2php-x.y.z-pear.tgz
 
 Usage
 -----
