@@ -268,7 +268,7 @@ foreach($service['types'] as $type) {
         $code .= "    public \$".$member['member'] . ";\n";
     }
     $code .= "}\n";
-    if($file) 
+    if(isset($file)) 
     {
         print "Writing " . $type['baseClass']. ".php...";
         fwrite($file, "<?php\n\n".$code."\n");
