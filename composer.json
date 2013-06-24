@@ -1,0 +1,11 @@
+{
+    "name": "hostnet/wsdl2php",
+    "description": "wsdl2php is a tool for generating PHP 5 proxy classes that can be used to access",
+    "license": "LGPL-3.0+",
+    "require": {
+        "php": ">=5.3"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+    }
+}
