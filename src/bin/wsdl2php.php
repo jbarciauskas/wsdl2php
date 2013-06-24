@@ -404,7 +404,7 @@ print "done\n";
 
 function parse_doc($prefix, $doc) {
     $code = "";
-    $words = split(' ', $doc);
+    $words = explode(' ', $doc);
     $line = $prefix;
     foreach($words as $word) {
         $line .= $word.' ';
