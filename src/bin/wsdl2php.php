@@ -254,10 +254,13 @@ foreach($types as $type) {
     if($namespace && $pear_style){
         $full_class = $ct_namespace . $class;
     }else if($namespace){
-        $full_class = '\\' . $ct_namespace . '\\' . $class;
+        $full_class = '\\' . $ct_namespace . '\\' . str_replace('_', '\\', $class);
     }
 
-    $service['types'][] = array('baseClass'=> $class, 'class' => $full_class, 'members' => $members, 'values' => $values);
+    $parts = explode('_', $class);
+    $php_class_name = $parts[count($parts) - 1];
+
+    $service['types'][] = array('phpClassName' => $php_class_name, 'baseClass'=> $class, 'class' => $full_class, 'members' => $members, 'values' => $values);
     print ".";
 }
 print "done\n";
@@ -275,8 +278,11 @@ foreach($service['types'] as $type) {
             $dirname = str_replace('_', '/', $dirname);
             $filename = $type['class'] . '.php';
         }else{
-            $dirname = str_replace('\\', '/', $dirname);
-            $filename = $type['baseClass'] . '.php';
+            $dirname = dirname(str_replace('\\', '/', $type['class']));
+            if($dirname[0] == '/'){
+                $dirname = substr($dirname, 1);
+            }
+            $filename = $type['phpClassName'] . '.php';
         }
         if(!is_dir($dirname))
             mkdir($dirname, 0777, true);
@@ -293,8 +299,13 @@ foreach($service['types'] as $type) {
     if($namespace && $pear_style){
         $code .= "class ".$type['class']." {\n";
     }else if($namespace){
-        $code .= "namespace " . $ct_namespace . ";\n";
-        $code .= "class ".$type['baseClass']." {\n";
+
+        $ns =str_replace('/', '\\', dirname(str_replace('\\', '/', $type['class'])));
+        if($ns[0] == '\\'){
+            $ns = substr($ns, 1);
+        }
+        $code .= "namespace " . $ns . ";\n";
+        $code .= "class ".$type['phpClassName']." {\n";
     }
     foreach($type['values'] as $value) {
         $code .= "  const ".generatePHPSymbol($value)." = '$value';\n";
@@ -308,7 +319,7 @@ foreach($service['types'] as $type) {
             if($pear_style){
                 $hint = $ct_namespace . $member['type'];
             }else{
-                $hint =  '\\' . $ct_namespace . '\\' . $member['type'];
+                $hint =  '\\' . $ct_namespace . '\\' . str_replace('_', '\\', $member['type']);
             }
             if(strstr($hint, 'ArrayOf') !== FALSE){
                 $hint = 'array ' . str_replace('ArrayOf', '', $hint);
@@ -403,7 +414,7 @@ foreach($service['functions'] as $function) {
                     if($namespace && $pear_style){
                         $typeHint = $ct_namespace . $typeHint;
                     }else if($namespace){
-                        $typeHint = '\\' . $ct_namespace  . '\\' . $typeHint;
+                        $typeHint = '\\' . $ct_namespace  . '\\' . str_replace('_', '\\', $typeHint);
                     }
                 }
                 else $typeHint = '';
@@ -430,7 +441,7 @@ foreach($service['functions'] as $function) {
         if($namespace && $pear_style){
             $returnHint = $ct_namespace . $returnHint;
         }else if($namespace){
-            $returnHint = '\\' . $ct_namespace  . '\\' . $returnHint;
+            $returnHint = '\\' . $ct_namespace  . '\\' . str_replace('_', '\\', $returnHint);
         }
     }
     $code .= "   * @return ".$returnHint."\n";
