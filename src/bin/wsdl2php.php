@@ -545,6 +545,7 @@ function findType(&$dom, $class) {
             $node = $children->item($j);
             if ($node instanceof DOMElement &&
                 $node->hasAttributes() &&
+                $node->attributes->getNamedItem('name') &&
                 $node->attributes->getNamedItem('name')->nodeValue == $class) {
                     return $node;
                 }
