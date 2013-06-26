@@ -386,21 +386,27 @@ $code .= " */\n";
 
 $code .= "class ".$service['class']." extends \\SoapClient {\n\n";
 
+// add default wsdl
+$code .= "  const WSDL_FILE = \"".$service['wsdl']."\";\n";
+
 // add classmap
-$code .= "  private static \$classmap = array(\n";
+$code .= "  private \$classmap = array(\n";
 foreach($service['types'] as $type) {
     $code .= "                                    '".$type['baseClass']."' => '".$type['class']."',\n";
 }
 $code .= "                                   );\n\n";
-$code .= "  public function __construct(\$wsdl = \"".$service['wsdl']."\", \$options = array()) {\n";
+$code .= "  public function __construct(\$wsdl = null, \$options = array()) {\n";
 
 // initialize classmap (merge)
-$code .= "    foreach(self::\$classmap as \$key => \$value) {\n";
+$code .= "    foreach(\$this->classmap as \$key => \$value) {\n";
 $code .= "      if(!isset(\$options['classmap'][\$key])) {\n";
 $code .= "        \$options['classmap'][\$key] = \$value;\n";
 $code .= "      }\n";
 $code .= "    }\n";
-$code .= "    parent::__construct(\$wsdl, \$options);\n";
+$code .= "    if(isset(\$options['headers'])) {\n";
+$code .= "      \$this->__setSoapHeaders(\$options['headers']);\n";
+$code .= "    }\n";
+$code .= "    parent::__construct(\$wsdl ?: self::WSDL_FILE, \$options);\n";
 $code .= "  }\n\n";
 
 foreach($service['functions'] as $function) {
