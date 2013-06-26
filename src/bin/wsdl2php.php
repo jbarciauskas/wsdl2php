@@ -28,12 +28,12 @@ ini_set('soap.wsdl_cache_enabled', 0); // disable WSDL cache
  * - Characters followed by a colon (parameter requires value)
  * - Characters followed by two colons (optional value)
  */
-$opts = getopt('i:n:pg:e:');
+$opts = getopt('i:n:pg:');
 /**
  * -i <input wsdl file>
- * -n <base_namespace>
- * -p <pear style NS>
- * -g <generated complext types part of the namespace>
+ * -n <base_namespace for the Generated Service>
+ * -p <build pear style Namespace, default is PSR-0 if an namespace is specified>
+ * -g <append to complext types part of the namespace>
  */
 if(!isset($opts['i'])) {
     die("usage: wsdl2php -i <wsdl-file> -n <namespace (optional)>\n");
