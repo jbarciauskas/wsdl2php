@@ -9,7 +9,7 @@
 // | LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR  |
 // | A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT   |
 // | OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  |
-// | SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT       | 
+// | SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT       |
 // | LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  |
 // | DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  |
 // | THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT    |
@@ -22,15 +22,38 @@
 
 ini_set('soap.wsdl_cache_enabled', 0); // disable WSDL cache
 
-if( $_SERVER['argc'] < 2 ) {
-    die("usage: wsdl2php <wsdl-file> <namespace (optional)>\n");
+/**
+ * The options parameter may contain the following elements:
+ * - Individual characters (do not accept values)
+ * - Characters followed by a colon (parameter requires value)
+ * - Characters followed by two colons (optional value)
+ */
+$opts = getopt('i:n:pg:e:');
+/**
+ * -i <input wsdl file>
+ * -n <base_namespace>
+ * -p <pear style NS>
+ * -g <generated complext types part of the namespace>
+ */
+if(!isset($opts['i'])) {
+    die("usage: wsdl2php -i <wsdl-file> -n <namespace (optional)>\n");
 }
 
-$wsdl = $_SERVER['argv'][1];
-if(isset($_SERVER['argv'][2])) {
-    $namespace = $_SERVER['argv'][2];
+$wsdl = $opts['i'];
+$namespace = false;
+$pear_style = isset($opts['p']);
+if(isset($opts['n'])) {
+    $namespace = $opts['n'];
 }
-else $namespace = '';
+$ct_namespace = $namespace;
+if(isset($opts['g'])) {
+    $ct_namespace = $ct_namespace . ($pear_style ? ('_'.$opts['g']) : ('\\' . $opts['g']));
+}
+
+//$namespace is for the services
+//$ct_namespace is for the complex types
+//$expand_ns will the _ be expanded (only work with psr0)
+
 
 print "Analyzing WSDL";
 
@@ -131,7 +154,7 @@ foreach($operations as $operation) {
         $call = $matches[2];
         $params = $matches[3];
     } else { // invalid function call
-        throw new Exception('Invalid function call: '.$function);
+        throw new Exception('Invalid function call: ' . $operation);
     }
 
     $params = explode(', ', $params);
@@ -209,7 +232,7 @@ foreach($types as $type) {
         }
 
         // OBS: Skip member if already presented (this shouldn't happen, but I've actually seen it in a WSDL-file)
-        // "It's better to be safe than sorry" (ref Morten Harket) 
+        // "It's better to be safe than sorry" (ref Morten Harket)
         $add = true;
         foreach($members as $mem) {
             if($mem['member'] == $member) {
@@ -227,7 +250,14 @@ foreach($types as $type) {
         $values = checkForEnum($dom, $class);
     }
 
-    $service['types'][] = array('baseClass'=> $class, 'class' => $namespace.$class, 'members' => $members, 'values' => $values);
+    $full_class = $class;
+    if($namespace && $pear_style){
+        $full_class = $ct_namespace . $class;
+    }else if($namespace){
+        $full_class = '\\' . $ct_namespace . '\\' . $class;
+    }
+
+    $service['types'][] = array('baseClass'=> $class, 'class' => $full_class, 'members' => $members, 'values' => $values);
     print ".";
 }
 print "done\n";
@@ -239,10 +269,18 @@ $code = "";
 foreach($service['types'] as $type) {
 
     if($namespace) {
-        $dirname = str_replace('_', '/', $namespace);
+        $dirname = $ct_namespace;
+        $filename = '';
+        if($pear_style){
+            $dirname = str_replace('_', '/', $dirname);
+            $filename = $type['class'] . '.php';
+        }else{
+            $dirname = str_replace('\\', '/', $dirname);
+            $filename = $type['baseClass'] . '.php';
+        }
         if(!is_dir($dirname))
             mkdir($dirname, 0777, true);
-        $file = fopen($dirname . $type['baseClass']. '.php', 'w');
+        $file = fopen($dirname . '/' . $filename, 'w');
     }
     //  $code .= "/**\n";
     //  $code .= " * ".(isset($type['doc'])?$type['doc']:'')."\n";
@@ -252,7 +290,12 @@ foreach($service['types'] as $type) {
     //  $code .= " */\n";
 
     // add enumeration values
-    $code .= "class ".$type['class']." {\n";
+    if($namespace && $pear_style){
+        $code .= "class ".$type['class']." {\n";
+    }else if($namespace){
+        $code .= "namespace " . $ct_namespace . ";\n";
+        $code .= "class ".$type['baseClass']." {\n";
+    }
     foreach($type['values'] as $value) {
         $code .= "  const ".generatePHPSymbol($value)." = '$value';\n";
     }
@@ -260,15 +303,20 @@ foreach($service['types'] as $type) {
     // add member variables
     foreach($type['members'] as $member) {
         $code .= "    /**\n";
-        if(!in_array($member['type'], $primitive_types))
-            $code .= "     * @var " . $namespace . $member['type'] . "\n";
-        else
+        if(!in_array($member['type'], $primitive_types) && $namespace){
+            if($pear_style){
+              $code .= "     * @var " . $ct_namespace . $member['type'] . "\n";
+            }else{
+                $code .= "     * @var \\" . $ct_namespace . '\\' . $member['type'] . "\n";
+            }
+        }else{
             $code .= "     * @var " . $member['type'] . "\n";
+        }
         $code .= "     */\n";
         $code .= "    public \$".$member['member'] . ";\n";
     }
     $code .= "}\n";
-    if(isset($file)) 
+    if(isset($file))
     {
         print "Writing " . $type['baseClass']. ".php...";
         fwrite($file, "<?php\n\n".$code."\n");
@@ -299,6 +347,10 @@ foreach($service['types'] as $type) {
 //  $code .= "require_once '".$type['class'].".php';\n";
 //}
 
+if($namespace && !$pear_style){
+    $code .= "namespace " . $namespace . ";\n";
+}
+
 $code .= "\n";
 
 // class level docblock
@@ -311,7 +363,8 @@ $code .= " * @author    {author}\n";
 $code .= " * @copyright {copyright}\n";
 $code .= " * @package   {package}\n";
 $code .= " */\n";
-$code .= "class ".$service['class']." extends SoapClient {\n\n";
+
+$code .= "class ".$service['class']." extends \\SoapClient {\n\n";
 
 // add classmap
 $code .= "  private static \$classmap = array(\n";
@@ -342,7 +395,11 @@ foreach($service['functions'] as $function) {
             if(count($param) == 2) {
                 $typeHint = $param[0] . ' ';
                 if(isTypeHint($typeHint, $primitive_types)) {
-                    $typeHint = $namespace . $typeHint;
+                    if($namespace && $pear_style){
+                        $typeHint = $ct_namespace . $typeHint;
+                    }else if($namespace){
+                        $typeHint = '\\' . $ct_namespace  . '\\' . $typeHint;
+                    }
                 }
                 else $typeHint = '';
                 $typeName = $param[1];
@@ -363,11 +420,15 @@ foreach($service['functions'] as $function) {
             $para[] = $typeName;
         }
     }
+    $returnHint = $function['return'];
     if(isTypeHint($function['return'], $primitive_types)) {
-        $code .= "   * @return ".$namespace . $function['return']."\n";
+        if($namespace && $pear_style){
+            $returnHint = $ct_namespace . $returnHint;
+        }else if($namespace){
+            $returnHint = '\\' . $ct_namespace  . '\\' . $returnHint;
+        }
     }
-    else
-        $code .= "   * @return ".$function['return']."\n";
+    $code .= "   * @return ".$returnHint."\n";
     $code .= "   */\n";
     $code .= "  public function ".$function['name']."(".implode(', ', $signature).") {\n";
     //  $code .= "    return \$this->client->".$function['name']."(".implode(', ', $para).");\n";
@@ -375,7 +436,7 @@ foreach($service['functions'] as $function) {
     $params = array();
     if(count($signature) > 0) { // add arguments
         foreach($signature as $param) {
-            if(strpos($param, ' ')) { // slice 
+            if(strpos($param, ' ')) { // slice
                 $param = array_pop(explode(' ', $param));
             }
             $params[] = $param;
@@ -397,7 +458,15 @@ $code .= "}\n\n";
 print "done\n";
 
 print "Writing ".$service['class'].".php...";
-$fp = fopen($service['class'].".php", 'w');
+$filename = $service['class'].".php";
+if($namespace && !$pear_style){
+  $dirname = str_replace('\\', '/', $namespace);
+  if(!is_dir($dirname)){
+    mkdir($dirname, 0777, true);
+  }
+  $filename = $dirname . '/' . $filename;
+}
+$fp = fopen($filename, 'w');
 fwrite($fp, "<?php\n".$code."?>\n");
 fclose($fp);
 print "done\n";
@@ -419,7 +488,7 @@ function parse_doc($prefix, $doc) {
 
 /**
  * Look for enumeration
- * 
+ *
  * @param DOM $dom
  * @param string $class
  * @return array
@@ -445,7 +514,7 @@ function checkForEnum(&$dom, $class) {
 
 /**
  * Look for a type
- * 
+ *
  * @param DOM $dom
  * @param string $class
  * @return DOMNode
