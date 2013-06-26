@@ -52,8 +52,10 @@ if(isset($opts['g'])) {
 
 //$namespace is for the services
 //$ct_namespace is for the complex types
-//$expand_ns will the _ be expanded (only work with psr0)
 
+//Predefined keyswords as of php 5.4
+//http://www.php.net/manual/en/reserved.keywords.php
+$keywords = array('__halt_compiler', 'abstract', 'and', 'array', 'as', 'break', 'callable', 'case', 'catch', 'class', 'clone', 'const', 'continue', 'declare', 'default', 'die', 'do', 'echo', 'else', 'elseif', 'empty', 'enddeclare', 'endfor', 'endforeach', 'endif', 'endswitch', 'endwhile', 'eval', 'exit', 'extends', 'final', 'for', 'foreach', 'function', 'global', 'goto', 'if', 'implements', 'include', 'include_once', 'instanceof', 'insteadof', 'interface', 'isset', 'list', 'namespace', 'new', 'or', 'print', 'private', 'protected', 'public', 'require', 'require_once', 'return', 'static', 'switch', 'throw', 'trait', 'try', 'unset', 'use', 'var', 'while', 'xor');
 
 print "Analyzing WSDL";
 
@@ -251,14 +253,16 @@ foreach($types as $type) {
     }
 
     $full_class = $class;
+    $php_class_name = $class;
     if($namespace && $pear_style){
         $full_class = $ct_namespace . $class;
+        $parts = explode('_', $class);
+        $php_class_name = $parts[count($parts) - 1];
     }else if($namespace){
-        $full_class = '\\' . $ct_namespace . '\\' . str_replace('_', '\\', $class);
+        $full_class = suppress_keywords('\\' . $ct_namespace . '\\' . str_replace('_', '\\', $class), $keywords);
+        $parts = explode('\\', $full_class);
+        $php_class_name = $parts[count($parts) - 1];
     }
-
-    $parts = explode('_', $class);
-    $php_class_name = $parts[count($parts) - 1];
 
     $service['types'][] = array('phpClassName' => $php_class_name, 'baseClass'=> $class, 'class' => $full_class, 'members' => $members, 'values' => $values);
     print ".";
@@ -414,7 +418,7 @@ foreach($service['functions'] as $function) {
                     if($namespace && $pear_style){
                         $typeHint = $ct_namespace . $typeHint;
                     }else if($namespace){
-                        $typeHint = '\\' . $ct_namespace  . '\\' . str_replace('_', '\\', $typeHint);
+                        $typeHint = suppress_keywords('\\' . $ct_namespace  . '\\' . str_replace('_', '\\', $typeHint), $keywords);
                     }
                 }
                 else $typeHint = '';
@@ -441,7 +445,7 @@ foreach($service['functions'] as $function) {
         if($namespace && $pear_style){
             $returnHint = $ct_namespace . $returnHint;
         }else if($namespace){
-            $returnHint = '\\' . $ct_namespace  . '\\' . str_replace('_', '\\', $returnHint);
+            $returnHint = suppress_keywords('\\' . $ct_namespace  . '\\' . str_replace('_', '\\', $returnHint), $keywords);
         }
     }
     $code .= "   * @return ".$returnHint."\n";
@@ -486,6 +490,16 @@ $fp = fopen($filename, 'w');
 fwrite($fp, "<?php\n".$code."?>\n");
 fclose($fp);
 print "done\n";
+
+function suppress_keywords($txt, $keywords){
+    foreach($keywords as $keyword){
+        if(stristr($txt, '\\' . $keyword) !== FALSE){
+            //Keyword found in class or namespace;
+            $txt = str_ireplace('\\' . $keyword, '\\A' . $keyword, $txt);
+        }
+    }
+    return $txt;
+}
 
 function parse_doc($prefix, $doc) {
     $code = "";
