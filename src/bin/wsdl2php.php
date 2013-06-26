@@ -204,7 +204,7 @@ $service['types'] = array();
 foreach($types as $type) {
     $parts = explode("\n", $type);
     $class = explode(" ", $parts[0]);
-    $class = $class[1];
+    $class = trim($class[1]);
 
     if( substr($class, -2, 2) == '[]' ) { // array skipping
         continue;
@@ -304,11 +304,16 @@ foreach($service['types'] as $type) {
     foreach($type['members'] as $member) {
         $code .= "    /**\n";
         if(!in_array($member['type'], $primitive_types) && $namespace){
+            $hint  = '';
             if($pear_style){
-              $code .= "     * @var " . $ct_namespace . $member['type'] . "\n";
+                $hint = $ct_namespace . $member['type'];
             }else{
-                $code .= "     * @var \\" . $ct_namespace . '\\' . $member['type'] . "\n";
+                $hint =  '\\' . $ct_namespace . '\\' . $member['type'];
             }
+            if(strstr($hint, 'ArrayOf') !== FALSE){
+                $hint = 'array ' . str_replace('ArrayOf', '', $hint);
+            }
+            $code .= "     * @var " . $hint . "\n";
         }else{
             $code .= "     * @var " . $member['type'] . "\n";
         }
