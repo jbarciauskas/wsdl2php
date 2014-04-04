@@ -202,6 +202,25 @@ foreach($operations as $operation) {
 
 $types = $client->__getTypes();
 
+// Finds extensions.
+$typesExtensions = array();
+$extensionNodes = $dom->getElementsByTagName('extension');
+foreach($extensionNodes as $en)
+{
+	// Retrieves the extending type node.
+	$typeChildNode = $en->parentNode;
+	while(!empty($typeChildNode) && $typeChildNode->localName !== 'complexType') $typeChildNode = $typeChildNode->parentNode;
+	if(!empty($typeChildNode))
+	{
+		// Stores the extension for later retrieval.
+		$typeChildName	= $typeChildNode->attributes->getNamedItem('name')->nodeValue;
+		$typeParentName	= explode(':', $en->attributes->getNamedItem('base')->nodeValue);
+		$typeParentName = end($typeParentName);
+		$typesExtensions[$typeChildName] = $typeParentName;
+	}
+}
+unset($extensionNodes, $typeChildNode, $typeChildName, $typeParentName);
+
 $primitive_types = array('string', 'int', 'long', 'float', 'boolean', 'dateTime', 'double', 'short', 'UNKNOWN', 'base64Binary', 'decimal', 'ArrayOfInt', 'ArrayOfFloat', 'ArrayOfString', 'decimal', 'hexBinary'); // TODO: dateTime is special, maybe use PEAR::Date or similar
 $service['types'] = array();
 foreach($types as $type) {
@@ -299,22 +318,40 @@ foreach($service['types'] as $type) {
     //  $code .= " * @package\n";
     //  $code .= " * @copyright\n";
     //  $code .= " */\n";
-
-    // add enumeration values
-    if($namespace && $pear_style){
-        $code .= "class ".$type['class']." {\n";
-    }else if($namespace){
-
-        $ns =str_replace('/', '\\', dirname(str_replace('\\', '/', $type['class'])));
-        if($ns[0] == '\\'){
-            $ns = substr($ns, 1);
-        }
-        $code .= "namespace " . $ns . ";\n";
-        $code .= "class ".$type['phpClassName']." {\n";
-    }
-    else
-        $code .= "class ".$type['class']." {\n";
-    
+	
+	// Extensions: look for parent.
+	$parentTypeArr = null;
+	if(!empty($typesExtensions[$type['baseClass']]))
+		foreach($service['types'] as $t)
+			if($t['baseClass'] === $typesExtensions[$type['baseClass']])
+			{
+				$parentTypeArr = $t;
+				break;
+			}
+	
+	// Add enumeration values.
+	if($namespace && $pear_style)
+	{
+		$classNameForDefinition = $type['class'];
+	}
+	elseif($namespace)
+	{
+		$ns = str_replace('/', '\\', dirname(str_replace('\\', '/', $type['class'])));
+		if($ns[0] == '\\') $ns = substr($ns, 1);
+		$code .= "namespace $ns;\n";
+		$classNameForDefinition = $type['phpClassName'];
+	}
+	else
+	{
+		$classNameForDefinition = $type['class'];
+	}
+	
+	$code .= 'class ' . $classNameForDefinition
+			.(!empty($parentTypeArr) ? ' extends '.$parentTypeArr['class'] : '')
+			." {\n";
+	
+	unset($parentTypeArr);
+	
     foreach($type['values'] as $value) {
         $code .= "\tconst ".generatePHPSymbol($value)." = '$value';\n";
     }
